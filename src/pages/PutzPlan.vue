@@ -1,70 +1,70 @@
 <template>
   <q-page class="bg-grey-3 column ">
     <div class="row q-pa-sm bg-primary">
-            <q-input 
-            v-model="newTask" 
+            <q-input
+            v-model="newTask"
             @keyup.enter="addTask"
             class="col"
             square
 
-            filled 
+            filled
             bg-color="white"
-            placeholder="Add Task" 
+            placeholder="Add Task"
             dense
             >
 
         <template v-slot:append>
-          <q-btn 
+          <q-btn
           @click="addTask"
-          round 
-          dense 
-          flat 
+          round
+          dense
+          flat
           icon="add" />
         </template>
-      </q-input> 
+      </q-input>
     </div>
  <q-list class="bg-white"
  separator
  bordered
  >
-      <q-item 
-      v-for="(task, index) in tasks"
-      :key="task.title"
-      @click="task.done=!task.done"
+      <q-item
+      v-for="(task, id) in tasks"
+      :key="task.name"
+      @click="task.status=!task.status"
       clickable
       v-ripple
-      :class="{'done bg-blue-1' : task.done}"
+      :class="{'done bg-blue-1' : task.status}"
       >
 
-    
+
         <q-item-section avatar>
-          <q-checkbox 
+          <q-checkbox
           class="no-pointer-events"
-          v-model="task.done" 
+          v-model="task.status"
           color="primary" />
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{task.title}}</q-item-label>
+          <q-item-label>{{task.name}}</q-item-label>
         </q-item-section>
 
         <q-item-section
-        v-if="task.done"
+        v-if="task.status"
         side
         >
-         <q-btn 
-         @click.stop="deleteTask(index)"
-         flat 
-         round 
+         <q-btn
+         @click.stop="deleteTask(id)"
+         flat
+         round
          dense
-         color="primary" 
+         color="primary"
          icon="delete" />
         </q-item-section>
       </q-item>
     </q-list>
-    <div 
+    <div
     v-if="!tasks.length"
     class="no-tasks absolute-center">
-      <q-icon 
+      <q-icon
       name="check"
       size="100px"
       color="primary"
@@ -77,29 +77,24 @@
 </template>
 
 <script>
+  import axios from "axios"
+
+ // const axios = require('axios');
 export default {
   data() {
     return {
       newTask : '',
       tasks: [
         {
-        title: 'Start Work',
+        title: '',
         done: false
         },
-                {
-        title: 'Prep Exams',
-        done: false
-        },
-                {
-        title: 'Be Happy',
-        done: true
-        }
       ]
     }
   },
   methods: {
     deleteTask(index) {
-         
+
       this.$q.dialog({
         title: 'Confirm',
         message: 'Delet?',
@@ -110,7 +105,7 @@ export default {
          this.$q.notify('Task.deleted')
       })
 
-    
+
     },
     addTask() {
       this.tasks.push({
@@ -118,7 +113,20 @@ export default {
         done: false
       })
       this.newTask = ''
-      
+
+    }
+  },
+
+
+
+  async created () {
+    try {
+      const res = await axios.get(`https://putzplan-admin.herokuapp.com/api/tasks`);
+      this.tasks  = res.data;
+      this.tasks = res.data["hydra:member"]
+      console.log(this.tasks)
+    }catch (e) {
+      console.log(e)
     }
   }
 }
