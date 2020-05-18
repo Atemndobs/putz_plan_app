@@ -26,7 +26,7 @@ Backend repo: [PutzPlanAdmin](https://github.com/Atemndobs/admin)
 - Vue.js
 
 
-> ⚠️ Caution: You need the following: android studio to emulate android device | virtual machine with windows (if you not on windows machine)| mac os fto build ios version:
+> ⚠️ Caution: You need the following: android studio to emulate android device | virtual machine with windows (if you not on windows machine)| mac os to build ios version:
 
 ### Made With Quasar
 
