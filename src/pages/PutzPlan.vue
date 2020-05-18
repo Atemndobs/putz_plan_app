@@ -108,7 +108,7 @@ export default {
       };
       axios.post('https://putzplan-admin.herokuapp.com/api/tasks', task)
         .then(function (response) {
-         // console.log(response)
+          //
         })
         .catch(function (error) {
           console.log(error);
