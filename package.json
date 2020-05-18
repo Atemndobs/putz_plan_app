@@ -2,18 +2,18 @@
   "name": "qsar",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "productName": "Putz Plan",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
-  "author": "Bertrand Atemkeng <ba@marketing-factory.de>",
+  "author": "Bertrand Atemkeng <bamarktfact@gmail.com>",
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "install": "npm install",
     "build": "quasar build",
     "start": "node server.js",
-    "deploy": "git subtree push --prefix dist heroku master",
-    "heroku-postbuild": "npm install && npm run build"
+    "heroku-postbuild": "npm install && npm run build",
+    "deploy": "git subtree push --prefix dist heroku master"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
