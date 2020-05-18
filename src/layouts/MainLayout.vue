@@ -28,7 +28,7 @@
         <div class="text-subtitle">{{todaysDate}}</div>
       </div>
       <q-img
-      src="statics/africa.jpg"
+      src="statics/cleaner.jpg"
       class="header-image absolute-top"
       />
     </q-header>
