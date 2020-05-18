@@ -27,15 +27,17 @@
  separator
  bordered
  >
-      <q-item
+
+
+
+   <q-item
       v-for="(task, index) in tasks"
       :key="task.name"
-      @click="task.status=!task.status"
+      @click="updateTask(task)"
       clickable
       v-ripple
       :class="{'done bg-blue-1' : task.status}"
       >
-
 
         <q-item-section avatar>
           <q-checkbox
@@ -97,8 +99,7 @@ export default {
       }).onOk(() => {
         this.tasks.splice(index, 1)
         this.$q.notify('Task.deleted')
-        axios.delete(`https://putzplan-admin.herokuapp.com/api/tasks/${task.id}`, {
-        });
+        axios.delete(`https://putzplan-admin.herokuapp.com/api/tasks/${task.id}`);
       })
     },
     addTask() {
@@ -120,10 +121,43 @@ export default {
       })
       this.newTask = ''
 
-    }
+    },
+
+    updateTask(task){
+      task.status=!task.status
+        axios.put(`https://putzplan-admin.herokuapp.com/api/tasks/${task.id}`, {
+          status: task.status
+        }).then(function (response) {
+          console.log(response.status)
+        }).catch(function (error) {
+          console.log(error);
+        });
+      if (task.status === true){
+        this.showNotif(task)
+        //this.triggerPositive(task)
+      }
+    },
+
+    showNotif (task) {
+      this.$q.notify({
+        message: 'You just completed:' + task.name,
+        color: 'purple',
+        //avatar: 'https://cdn.quasar.dev/img/boy-avatar.png'
+        avatar: "/statics/avat_atem.png"
+      })
+    },
+
+    triggerPositive (task) {
+      this.$q.notify({
+        type: 'positive',
+        message: 'You just completed:' + task.name,
+      })
+    },
+
+
   },
 
-//https://putzplan-admin.herokuapp.com/api/tasks/6
+
 
   async created () {
     try {
