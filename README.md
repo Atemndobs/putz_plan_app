@@ -1,6 +1,8 @@
 Putz planner
 ======================
 
+A multi platform PWA (todo app) for (web, windows, iOS, Mac OS and android) 
+
 > [PutzPlanner](https://putz-planner.herokuapp.com)
 
 ## Demo
@@ -72,7 +74,7 @@ make android
 
 
 
-## 🧰 Built with
+## Built with
 
 - Vue
 - Quasar
@@ -88,7 +90,7 @@ Playground (Live API): `api-platform`
 
 ![API-platform Playground](https://putzplan-admin.herokuapp.com/api)
 
-## 📋 To-do
+## To-do
 
 - Redo crud application with vuex
 - Implement data synchronization between server and front end with either:
