@@ -52,7 +52,7 @@
         side
         >
          <q-btn
-         @click.stop="deleteTask(id)"
+         @click.stop="deleteTask(task)"
          flat
          round
          dense
@@ -86,38 +86,54 @@ export default {
       newTask : '',
       tasks: [
         {
-        title: '',
-        done: false
+          id:'',
+        name: '',
+        status: false
         },
       ]
     }
   },
   methods: {
-    deleteTask(index) {
+    deleteTask(task) {
+      console.log(task.id)
 
       this.$q.dialog({
         title: 'Confirm',
-        message: 'Delet?',
+        message: 'Delete?',
         cancel: true,
         persistent: true
       }).onOk(() => {
-         this.tasks.splice(index, 1)
-         this.$q.notify('Task.deleted')
+        this.tasks.splice(task.id, 1)
+        this.$q.notify('Task.deleted')
+        axios.delete('https://putzplan-admin.herokuapp.com/api/tasks/'+task.id, {
+        });
       })
-
-
     },
     addTask() {
-      this.tasks.push({
-        title: this.newTask,
-        done: false
+
+      axios.post('https://putzplan-admin.herokuapp.com/api/tasks', {
+        name: this.newaTask,
+        status: false
       })
+        .then(function () {
+
+          this.tasks.push({
+            name: this.newTask,
+            status: false
+          })
+
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
       this.newTask = ''
+    //  console.log(response);
 
     }
   },
 
-
+//https://putzplan-admin.herokuapp.com/api/tasks/6
 
   async created () {
     try {
