@@ -113,24 +113,27 @@ export default {
       })
     },
     addTask() {
+
       let task =  {
         name: this.newTask,
         status: false
       };
-      axios.post('https://putzplan-admin.herokuapp.com/api/tasks', task)
-        .then(function (response) {
-          //
+
+      if (task.name !== ''){
+        axios.post('https://putzplan-admin.herokuapp.com/api/tasks', task)
+          .then(function (response) {
+            //
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+        this.tasks.push({
+          name: this.newTask,
+          status: false
         })
-        .catch(function (error) {
-          console.log(error);
-        });
-
-      this.tasks.push({
-        name: this.newTask,
-        status: false
-      })
+      }
       this.newTask = ''
-
     },
 
     updateTask(task){
