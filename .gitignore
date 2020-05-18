@@ -32,3 +32,4 @@ yarn-error.log*
 *.sln
 /src-cordova
 /src-electron
+/vuex_todo_manager-master

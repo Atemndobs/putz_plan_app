@@ -97,7 +97,7 @@ export default {
       }).onOk(() => {
         this.tasks.splice(index, 1)
         this.$q.notify('Task.deleted')
-        axios.delete('https://putzplan-admin.herokuapp.com/api/tasks/'+task.id, {
+        axios.delete(`https://putzplan-admin.herokuapp.com/api/tasks/${task.id}`, {
         });
       })
     },
