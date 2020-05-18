@@ -11,23 +11,23 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
-        <q-toolbar-title>
-          <q-btn 
+<!--        <q-toolbar-title>
+          <q-btn
             to="/"
-            round 
-            color="primary" 
+            round
+            color="primary"
             icon="home"
             side
              />
-        </q-toolbar-title>
+        </q-toolbar-title>-->
 
-    
+
       </q-toolbar>
       <div class="q-px-lg q-pt-xl  q-mb-md">
         <div class="text-h4">PutzPlan</div>
         <div class="text-subtitle">{{todaysDate}}</div>
       </div>
-      <q-img 
+      <q-img
       src="statics/africa.jpg"
       class="header-image absolute-top"
       />
@@ -41,10 +41,10 @@
       >
         <q-scroll-area style="height: calc(100% - 175px); margin-top: 175px; border-right: 1px solid #ddd">
           <q-list padding>
-            <q-item 
+            <q-item
             to="/"
             exact
-            clickable 
+            clickable
             v-ripple>
               <q-item-section avatar>
                 <q-icon name="list" />
@@ -55,9 +55,9 @@
               </q-item-section>
             </q-item>
 
-            <q-item 
+            <q-item
             to="/help"
-            clickable 
+            clickable
             v-ripple>
               <q-item-section avatar>
                 <q-icon name="help" />
@@ -68,8 +68,8 @@
               </q-item-section>
             </q-item>
 
-         
-            
+
+
           </q-list>
         </q-scroll-area>
 

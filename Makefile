@@ -49,7 +49,9 @@ make windows:
 	quasar build -m electron
 make mac:
 	quasar dev -m electron
-deploy:
+deploy-dist:
 	git subtree push --prefix dist heroku master
+deploy:
+	git push heroku master
 install:
 	npm install --no-bin-links --productions

@@ -27,9 +27,6 @@
  separator
  bordered
  >
-
-
-
    <q-item
       v-for="(task, index) in tasks"
       :key="task.name"
@@ -60,6 +57,19 @@
          dense
          color="primary"
          icon="delete" />
+        </q-item-section>
+
+        <q-item-section
+        v-if="task.status"
+        side
+        >
+<!--         <q-btn
+         @click.stop="editTask(task)"
+         flat
+         round
+         dense
+         color="secondary"
+         icon="edit" />-->
         </q-item-section>
       </q-item>
     </q-list>
@@ -138,12 +148,19 @@ export default {
       }
     },
 
+
+    editTask(task) {
+      console.log(task)
+    },
+
+
     showNotif (task) {
       this.$q.notify({
         message: 'You just completed:' + task.name,
         color: 'purple',
         //avatar: 'https://cdn.quasar.dev/img/boy-avatar.png'
-        avatar: "/statics/avat_atem.png"
+        avatar: "/statics/avat_atem.png",
+       // type: 'positive',
       })
     },
 
