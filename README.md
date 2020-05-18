@@ -88,7 +88,7 @@ Endpoint: `https://putzplan-admin.herokuapp.com/api/tasks`
 
 Playground (Live API): `api-platform`
 
-![API-platform Playground](https://putzplan-admin.herokuapp.com/api)
+[API-platform Playground](https://putzplan-admin.herokuapp.com/api)
 
 ## To-do
 
