@@ -1,9 +1,9 @@
-🗃️ Putz planner
+Putz planner
 ======================
 
 > [PutzPlanner](https://putz-planner.herokuapp.com)
 
-## 🖥️ Demo
+## Demo
 
 Live demo: [PutzPlanner](https://putz-planner.herokuapp.com)
 Backend: [PutzPlanAdmin](https://putzplan-admin.herokuapp.com/admin)
@@ -28,7 +28,7 @@ Backend repo: [PutzPlanAdmin](https://github.com/Atemndobs/admin)
 
 ### Made With Quasar
 
-## 🧾 Installation
+## Installation
 
 
 
