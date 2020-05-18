@@ -1,13 +1,13 @@
 Putz planner
 ======================
 
-A multi platform PWA (todo app) for (web, windows, iOS, Mac OS and android) 
+A multi platform PWA (todo app) for (web, windows, iOS, Mac OS and android)
 
 > [PutzPlanner](https://putz-planner.herokuapp.com)
 
 ## Demo
 
-Live demo: [PutzPlanner](https://putz-planner.herokuapp.com)
+Live demo: [PutzPlanner-App](https://putz-planner.herokuapp.com)
 Backend: [PutzPlanAdmin](https://putzplan-admin.herokuapp.com/admin)
 Backend API: [PutzPlanAdmin](https://putzplan-admin.herokuapp.com/api)
 Backend repo: [PutzPlanAdmin](https://github.com/Atemndobs/admin)
