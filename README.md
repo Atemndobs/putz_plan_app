@@ -93,6 +93,7 @@ Playground (Live API): `api-platform`
 ## To-do
 
 - Redo crud application with vuex
+- Include Login and Registration
 - Implement data synchronization between server and front end with either:
       - Mercure Hub (symfony)
       - Pusher
