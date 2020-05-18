@@ -28,7 +28,7 @@
  bordered
  >
       <q-item
-      v-for="(task, id) in tasks"
+      v-for="(task, index) in tasks"
       :key="task.name"
       @click="task.status=!task.status"
       clickable
@@ -52,7 +52,7 @@
         side
         >
          <q-btn
-         @click.stop="deleteTask(task)"
+         @click.stop="deleteTask(index)"
          flat
          round
          dense
@@ -79,56 +79,46 @@
 <script>
   import axios from "axios"
 
- // const axios = require('axios');
 export default {
   data() {
     return {
       newTask : '',
-      tasks: [
-        {
-          id:'',
-        name: '',
-        status: false
-        },
-      ]
+      tasks: []
     }
   },
   methods: {
-    deleteTask(task) {
-      console.log(task.id)
-
+    deleteTask(index) {
+      let task = this.tasks[index]
       this.$q.dialog({
         title: 'Confirm',
         message: 'Delete?',
         cancel: true,
         persistent: true
       }).onOk(() => {
-        this.tasks.splice(task.id, 1)
+        this.tasks.splice(index, 1)
         this.$q.notify('Task.deleted')
         axios.delete('https://putzplan-admin.herokuapp.com/api/tasks/'+task.id, {
         });
       })
     },
     addTask() {
-
-      axios.post('https://putzplan-admin.herokuapp.com/api/tasks', {
-        name: this.newaTask,
+      let task =  {
+        name: this.newTask,
         status: false
-      })
-        .then(function () {
-
-          this.tasks.push({
-            name: this.newTask,
-            status: false
-          })
-
+      };
+      axios.post('https://putzplan-admin.herokuapp.com/api/tasks', task)
+        .then(function (response) {
+         // console.log(response)
         })
         .catch(function (error) {
           console.log(error);
         });
 
+      this.tasks.push({
+        name: this.newTask,
+        status: false
+      })
       this.newTask = ''
-    //  console.log(response);
 
     }
   },
@@ -140,7 +130,7 @@ export default {
       const res = await axios.get(`https://putzplan-admin.herokuapp.com/api/tasks`);
       this.tasks  = res.data;
       this.tasks = res.data["hydra:member"]
-      console.log(this.tasks)
+     // console.log(this.tasks)
     }catch (e) {
       console.log(e)
     }
