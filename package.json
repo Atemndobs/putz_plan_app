@@ -9,7 +9,6 @@
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
-    "install": "npm install",
     "build": "quasar build",
     "start": "node server.js",
     "heroku-postbuild": "npm install && npm run build",
