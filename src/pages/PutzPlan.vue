@@ -23,11 +23,11 @@
         </template>
       </q-input>
     </div>
-    <div class="loading-element"
-         id="loading-element"
-    >
+
+    <div class="loading-element loading" id="loading-element">
       <img src="../statics/spinner.svg"  alt=""/>
     </div>
+
  <q-list class="bg-white"
          separator
          bordered
@@ -177,15 +177,15 @@ export default {
     },
 
     startLoading(){
-      this.loadingElement = document.getElementById("loading-element");
-      this.loadingElement.classList.add('loading')
-      return this.loadingElement.classList
+      let loadingElement = document.getElementById("loading-element");
+      loadingElement.classList.add('loading')
     },
 
     stopLoading(){
-      this.loadingElement = document.getElementById("loading-element");
-      this.loadingElement.classList.remove('loading')
-      return this.loadingElement.classList
+      let loadingElement = document.getElementById("loading-element");
+      loadingElement.classList.remove('loading')
+
+      //console.log(loadingElement.classList.remove('loading-element'))
     }
 
 
@@ -194,17 +194,11 @@ export default {
 
   async created () {
 
-
     try {
       const res = await axios.get(`https://putzplan-admin.herokuapp.com/api/tasks`);
-
-      this.startLoading()
-      console.log(this.startLoading())
       this.tasks  = res.data;
       this.tasks = res.data["hydra:member"]
       this.stopLoading();
-      console.log(this.stopLoading())
-     // console.log(this.tasks)
     }catch (e) {
    this.stopLoading()
     }
@@ -229,7 +223,7 @@ export default {
   margin: 0 auto;
   display: none;
   &.loading {
-    display: block;
+  display: block;
   }
 }
 
