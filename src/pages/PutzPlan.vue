@@ -23,9 +23,14 @@
         </template>
       </q-input>
     </div>
+    <div class="loading-element"
+         id="loading-element"
+    >
+      <img src="../statics/spinner.svg"  alt=""/>
+    </div>
  <q-list class="bg-white"
- separator
- bordered
+         separator
+         bordered
  >
    <q-item
       v-for="(task, index) in tasks"
@@ -42,7 +47,7 @@
           v-model="task.status"
           color="primary" />
         </q-item-section>
-        <q-item-section>
+        <q-item-section >
           <q-item-label>{{task.name}}</q-item-label>
         </q-item-section>
 
@@ -151,11 +156,9 @@ export default {
       }
     },
 
-
     editTask(task) {
       console.log(task)
     },
-
 
     showNotif (task) {
       this.$q.notify({
@@ -166,7 +169,6 @@ export default {
        // type: 'positive',
       })
     },
-
     triggerPositive (task) {
       this.$q.notify({
         type: 'positive',
@@ -174,19 +176,37 @@ export default {
       })
     },
 
+    startLoading(){
+      this.loadingElement = document.getElementById("loading-element");
+      this.loadingElement.classList.add('loading')
+      return this.loadingElement.classList
+    },
+
+    stopLoading(){
+      this.loadingElement = document.getElementById("loading-element");
+      this.loadingElement.classList.remove('loading')
+      return this.loadingElement.classList
+    }
+
 
   },
 
 
-
   async created () {
+
+
     try {
       const res = await axios.get(`https://putzplan-admin.herokuapp.com/api/tasks`);
+
+      this.startLoading()
+      console.log(this.startLoading())
       this.tasks  = res.data;
       this.tasks = res.data["hydra:member"]
+      this.stopLoading();
+      console.log(this.stopLoading())
      // console.log(this.tasks)
     }catch (e) {
-      console.log(e)
+   this.stopLoading()
     }
   }
 }
@@ -202,4 +222,15 @@ export default {
   .no-tasks {
     opacity: 0.5;
   }
+
+.loading-element {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  display: none;
+  &.loading {
+    display: block;
+  }
+}
+
 </style>
