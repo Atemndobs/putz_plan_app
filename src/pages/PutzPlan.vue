@@ -32,6 +32,7 @@
          separator
          bordered
  >
+
    <q-item
       v-for="(task, index) in tasks"
       :key="task.name"
@@ -41,42 +42,63 @@
       :class="{'done bg-blue-1' : task.status}"
       >
 
-        <q-item-section avatar>
-          <q-checkbox
-          class="no-pointer-events"
-          v-model="task.status"
-          color="primary" />
-        </q-item-section>
-        <q-item-section >
-          <q-item-label>{{task.name}}</q-item-label>
-        </q-item-section>
+     <q-slide-item
+       @left="onLeft"
+       @right="onRight"
+     >
 
-        <q-item-section
-        v-if="task.status"
-        side
-        >
-         <q-btn
-         @click.stop="deleteTask(index)"
-         flat
-         round
-         dense
-         color="primary"
-         icon="delete" />
-        </q-item-section>
+       <template v-slot:left>
+         <div class="row items-center">
+           <q-icon left name="done" /> Left
+         </div>
+       </template>
+       <template v-slot:right>
+         <div class="row items-center">
+           Right content.. long <q-icon right name="alarm" />
+         </div>
+       </template>
+<!--- Slide Section  --->
+       <q-item bordered>
+         <q-item-section avatar>
+           <q-checkbox
+             class="no-pointer-events"
+             v-model="task.status"
+             color="primary" />
+         </q-item-section>
 
-        <q-item-section
-        v-if="task.status"
-        side
-        >
-<!--         <q-btn
-         @click.stop="editTask(task)"
-         flat
-         round
-         dense
-         color="secondary"
-         icon="edit" />-->
-        </q-item-section>
-      </q-item>
+<!--         <q-item-section avatar>
+           <q-avatar>
+             <img src="https://cdn.quasar.dev/img/avatar4.jpg" draggable="false">
+           </q-avatar>
+         </q-item-section>-->
+
+         <q-item-section >
+           <q-item-label>{{task.name}}</q-item-label>
+         </q-item-section>
+
+         <q-item-section
+           v-if="task.status"
+           side
+         >
+           <q-btn
+             @click.stop="deleteTask(index)"
+             flat
+             round
+             dense
+             color="primary"
+             icon="delete" />
+         </q-item-section>
+       </q-item>
+       <!--- Slide Section  --->
+   </q-slide-item>
+
+
+   </q-item>
+
+
+
+
+
     </q-list>
     <div
     v-if="!tasks.length"
@@ -90,6 +112,7 @@
         No Tasks
       </div>
     </div>
+
   </q-page>
 </template>
 
@@ -100,7 +123,8 @@ export default {
   data() {
     return {
       newTask : '',
-      tasks: []
+      tasks: [],
+      info: null
     }
   },
   methods: {
@@ -156,9 +180,6 @@ export default {
       }
     },
 
-    editTask(task) {
-      console.log(task)
-    },
 
     showNotif (task) {
       this.$q.notify({
@@ -186,11 +207,28 @@ export default {
       loadingElement.classList.remove('loading')
 
       //console.log(loadingElement.classList.remove('loading-element'))
+    },
+
+    onLeft ({ reset }) {
+      this.$q.notify('Left action triggered. Resetting in 1 second.')
+      this.finalize(reset)
+    },
+
+    onRight ({ reset }) {
+      this.$q.notify('Right action triggered. Resetting in 1 second.')
+      this.finalize(reset)
+    },
+
+    finalize (reset) {
+      this.timer = setTimeout(() => {
+        reset()
+      }, 1000)
     }
-
-
   },
 
+  beforeDestroy () {
+    clearTimeout(this.timer)
+  },
 
   async created () {
 
@@ -202,7 +240,8 @@ export default {
     }catch (e) {
    this.stopLoading()
     }
-  }
+  },
+
 }
 </script>
 
@@ -225,6 +264,7 @@ export default {
   &.loading {
   display: block;
   }
+
 }
 
 </style>
