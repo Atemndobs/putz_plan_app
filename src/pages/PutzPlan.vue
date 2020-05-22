@@ -153,14 +153,15 @@ export default {
       })
     },
     addTask() {
-
+      const baseUrl = 'https://putzplan-admin.herokuapp.com/api';
+      const localUrl = 'https://127.0.0.1:8000/api'
       let task =  {
         name: this.newTask,
         status: false
       };
 
       if (task.name !== ''){
-        axios.post('https://putzplan-admin.herokuapp.com/api/tasks', task)
+        axios.post(`${baseUrl}/tasks`, task)
           .then(function (response) {
             //
           })
@@ -174,6 +175,7 @@ export default {
         })
       }
       this.newTask = ''
+      this.pushTasks();
     },
 
     updateTask(task){
@@ -235,12 +237,15 @@ export default {
         reset()
       }, 1000)
     },
-    pushTasks(task){
+    pushTasks(){
       this.$pusher.subscribe('my-channel', (channel) => {
-        channel.bind('my-event', ( task ) => {
-          console.log(task)
+        channel.bind('my-event', (data) => {
+          console.log(data)
         });
       });
+
+      axios.post(`https://127.0.0.1:8000/pusher`, this.tasks)
+     // axios.get(`https://127.0.0.1:8000/pusher`)
     }
   },
 
@@ -254,11 +259,12 @@ export default {
   mounted() {
     this.$pusher.subscribe('my-channel', (channel) => {
       channel.bind('my-event', ( data ) => {
-       console.log(this.tasks)
-        /*        console.log(data.name)
-               console.log(data.message)*/
+       console.log(data)
+        //console.log(data)
       });
     });
+
+   // axios.get(`https://127.0.0.1:8000/pusher`);
 
 
 /*    var pusher = new Pusher('c10b72782c8cc42e7404', {
@@ -274,12 +280,13 @@ export default {
 
 
   async created () {
+    const baseUrl = 'https://putzplan-admin.herokuapp.com/api';
+    const localUrl = 'https://127.0.0.1:8000/api'
     try {
-      const res = await axios.get(`https://putzplan-admin.herokuapp.com/api/tasks`);
+      const res = await axios.get(`${baseUrl}/tasks`);
       this.tasks  = res.data;
       this.tasks = res.data["hydra:member"]
       this.stopLoading();
-    // this.pushTasks(this.tasks)
     }catch (e) {
    this.stopLoading()
     }
