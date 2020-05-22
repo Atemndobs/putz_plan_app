@@ -119,6 +119,17 @@
 <script>
   import axios from "axios"
 
+  import Vue from 'vue';
+  import VuePusher from 'vue-pusher2';
+
+  Vue.use(VuePusher, {
+    api_key: 'c10b72782c8cc42e7404',
+    options: {
+      cluster: 'eu',
+      forceTLS: true
+    }
+  });
+
 export default {
   data() {
     return {
@@ -223,20 +234,52 @@ export default {
       this.timer = setTimeout(() => {
         reset()
       }, 1000)
+    },
+    pushTasks(task){
+      this.$pusher.subscribe('my-channel', (channel) => {
+        channel.bind('my-event', ( task ) => {
+          console.log(task)
+        });
+      });
     }
   },
+
+
 
   beforeDestroy () {
     clearTimeout(this.timer)
   },
 
-  async created () {
 
+  mounted() {
+    this.$pusher.subscribe('my-channel', (channel) => {
+      channel.bind('my-event', ( data ) => {
+       console.log(this.tasks)
+        /*        console.log(data.name)
+               console.log(data.message)*/
+      });
+    });
+
+
+/*    var pusher = new Pusher('c10b72782c8cc42e7404', {
+      cluster: 'eu',
+      forceTLS: true
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function (data) {
+    });*/
+
+  },
+
+
+  async created () {
     try {
       const res = await axios.get(`https://putzplan-admin.herokuapp.com/api/tasks`);
       this.tasks  = res.data;
       this.tasks = res.data["hydra:member"]
       this.stopLoading();
+    // this.pushTasks(this.tasks)
     }catch (e) {
    this.stopLoading()
     }
